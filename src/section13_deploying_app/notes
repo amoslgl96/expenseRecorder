@@ -50,11 +50,30 @@ viewers to see
 
 
 
-For github to communicate with our machine, 
+For github to communicate with our machine via the commandline, 
 we need establish a secure way of communication to the github server 
 we need: 
 SSH, secureShell -> 
 set up SSH keys 
 
 
-can communicate via SSH/https I think. 
+can communicate via SSH/https. 
+
+SSH is a bit more secure, but overall there is no major advantage. You can use whichever is most convenient for you.
+
+
+SSH, also known as Secure Socket Shell, is a network protocol that provides administrators with a secure way to access a remote comput
+
+
+
+
+To optimise bundle.js, 
+
+    we need to know how to make a production ready webpack ,
+
+    we need to know how to not run source-map when developer 
+    console tools are not used. to save space.
+
+    we need to know how to take out the referenced css files within the bundle,
+    and put them in styles folder.
+

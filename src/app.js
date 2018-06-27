@@ -13,7 +13,7 @@ import './styles/styles.scss';
 
 const store = configureStore();
 
-
+console.log('test');
 
 const jsx=(
     <Provider store={store}>
