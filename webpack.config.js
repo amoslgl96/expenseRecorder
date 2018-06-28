@@ -14,7 +14,7 @@ module.exports = (env)=> {
   return {
     entry: './src/app.js',
     output: {
-      path: path.join(__dirname, 'public'),
+      path: path.join(__dirname, 'public','dist'),
       filename: 'bundle.js'
     },
     module: {
@@ -55,8 +55,12 @@ module.exports = (env)=> {
     //because cheap-module.. does not trace css files 
     devtool: isProduction? 'source-map':'inline-source-map',
     devServer: {
-      contentBase: path.join(__dirname, 'public'),
-      historyApiFallback: true
+      //devServer looks for the bundle.js assets etc from root folder 
+      contentBase: path.join(__dirname,'public'),
+      historyApiFallback: true,
+      publicPath:'/dist/'
+      //hence, if we move bundle.js etc into dist/ folder, we need to specify this
+
     }
   }
 };

@@ -1,6 +1,3 @@
 node_modules/
 src/section13_deploying_app
-public/bundle.js
-public/bundle.js.map 
-public/styles.css
-public/styles.css.map 
+public/dist/
