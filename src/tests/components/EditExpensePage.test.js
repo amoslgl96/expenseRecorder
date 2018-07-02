@@ -9,19 +9,19 @@ import test_expenses from '../fixtures/expenses'
 //check if editExpensePage renders correctly, put in one of the expense from expenses
 
 
-let history,editExpense,startRemoveExpense,wrapper,expense;
+let history,startEditExpense,startRemoveExpense,wrapper,expense;
 
 //need to do this way as for each tests, the history and onsubmit
 //mock functions would be called with different arguments
 //so need to reset for every test.
 beforeEach(()=>{
     history={push:jest.fn()};
-    editExpense=jest.fn();
+    startEditExpense=jest.fn();
     expense=test_expenses[0];
     startRemoveExpense=jest.fn();
 
     wrapper=shallow(<EditExpensePage 
-    editExpense={editExpense} 
+    startEditExpense={startEditExpense} 
     history={history} 
     expense={expense} 
     startRemoveExpense={startRemoveExpense}/>)
@@ -39,7 +39,7 @@ test('Should render editExpensePage correctly',
 test('should handle editExpense for editing expense',
 ()=>{
     wrapper.find('ExpenseForm').prop('onSubmit')(expense);
-    expect(editExpense).toHaveBeenLastCalledWith(expense);
+    expect(startEditExpense).toHaveBeenLastCalledWith(expense.id,expense);
 
     expect(history.push).toHaveBeenLastCalledWith('/');
 })

@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import ExpenseForm from './ExpenseForm';
-import {editExpense, startRemoveExpense} from '../actions/expenses';
+import {startEditExpense, startRemoveExpense} from '../actions/expenses';
 
 //with the expense id, we can retrieve the global store
 //by connect this component page to the store
@@ -12,7 +12,7 @@ import {editExpense, startRemoveExpense} from '../actions/expenses';
 export class EditExpensePage extends React.Component{
 
   onSubmit=(expense)=>{
-    this.props.editExpense(expense);
+    this.props.startEditExpense(this.props.expense.id,expense);
     this.props.history.push('/')
   }
 
@@ -51,27 +51,11 @@ const mapStateToProps=(state,props)=>({
 
 
 const mapDispatchToProps=(dispatch)=>({
-  editExpense: (expense)=>dispatch(editExpense(expense.id,expense)),
+  startEditExpense: (id,expense)=>dispatch(startEditExpense(id,expense)),
   startRemoveExpense: (id)=>dispatch(startRemoveExpense(id))
 })
 
 export default connect(mapStateToProps,mapDispatchToProps)(EditExpensePage);
 
 
-/*
-Our react-router renders the HOC by calling connect()(editExpensePage)
 
-
-passes props into the HOC,
-
-hence for mapStateToProps,
-the second arg props, is what the current props are,
-or what props are being passed into editexpensepage,
-this props is passed via the router.
-
-using this current props,
-we can work with the global state to retrieve
-the correct expense to pass over to EditExpensePage
-component as a prop.
-
-*/
