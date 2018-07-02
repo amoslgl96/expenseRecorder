@@ -1,19 +1,19 @@
 
 
-//objects {} is not equal to another obj {}
-//so is array []  !== []
-//hence {'a':1,'b':2} !== {'a':1,'b':2}
+import {startAddExpense, addExpense,removeExpense,editExpense} from '../../actions/expenses';
 
-//hence to check for a function that returns obj,
-//we have to check the properties of the obj
+import thunk from 'redux-thunk';
+//to use the mock-store, we also need the thunk 
 
-//Jest provides a method for that .isEqual -> which helps
-//you to check the properties one-by-one 
+import configureMockStore from 'redux-mock-store';
 
+import test_expenses from '../fixtures/expenses';
 
-import {addExpense,removeExpense,editExpense} from '../../actions/expenses';
+//to check if data was stored correctly in database
+import database from '../../firebase/firebase';
 
-
+//creating mockStore to test async action generators
+const createMockStore=configureMockStore(([thunk]));
 
 //test for removeExpense
 
@@ -53,38 +53,95 @@ test('Should setup edit expense action object',()=>{
 
 
 test('Should setup add expense action object',()=>{
-    const expense={
-        description:'testing using jest',
-        note:'taught via udemy',
-        amount:5000,
-        createdAt:1000
-        };
-    const result=addExpense(expense);
+    const result=addExpense(test_expenses[2]);
     expect(result).toEqual({
         type:'ADD_EXPENSE',
-        expense:
-        {
-        ...expense,
-        id:expect.any(String)
-        }
+        expense:test_expenses[2]
     })
 })
+
+
+//involves creating a mock store  - using a module called redux-mock-store
+test('should add expense to database and store',
+(done)=>{
+    const store=createMockStore({});
+    const expenseData={
+        description:'Mouse',
+        amount:3000,
+        note:'This one is better',
+        createdAt:1000
+    };
+    //promise chaining-> chain calls on promises
+    //this .then() is chained to the return .then()
+    store.dispatch(startAddExpense(expenseData)).then(()=>{
+        const actions=store.getActions();
+        expect(actions[0]).toEqual({
+            type:'ADD_EXPENSE',
+            expense:{
+                id:expect.any(String),
+                ...expenseData
+            }
+        });
+
+        //check if database is updated
+        //return a promise here, so .then() can be executed
+        return database.ref(`expenses/${actions[0].expense.id}`).once('value')
+        }).then((snapshot)=>{
+            expect(snapshot.val()).toEqual(expenseData);
+            done();
+            })
+
+});
+
+test('should add expense with defaults to database and store',
+(done)=>{
+    const store=createMockStore({});
+
+    store.dispatch(startAddExpense()).then(()=>{
+        const actions=store.getActions();
+        expect(actions[0]).toEqual({
+            type:'ADD_EXPENSE',
+            expense:{           
+                    description : '',
+                    note : '',
+                    amount : 0,
+                    createdAt : 0,
+                    id:expect.any(String)
+
+                    }
+             });
+
+        //check if database is updated
+        //return a promise here, so .then() can be executed
+        return database.ref(`expenses/${actions[0].expense.id}`).once('value')
+        }).then((snapshot)=>{
+            expect(snapshot.val()).toEqual({
+                            description : '',
+                            note : '',
+                            amount : 0,
+                            createdAt: 0
+                            });
+                done();
+                })
+
+});
+
 
 
 //test for default addExpense
 
-test('Should setup add expense action object with default values',
-()=>{
-    const result=addExpense();
-    expect(result).toEqual({
-        type:'ADD_EXPENSE',
-        expense:
-        {
-        description : '',
-        note : '',
-        amount : 0,
-        createdAt : 0,
-        id:expect.any(String)
-        }
-    })
-})
+// test('Should setup add expense action object with default values',
+// ()=>{
+//     const result=addExpense();
+//     expect(result).toEqual({
+//         type:'ADD_EXPENSE',
+//         expense:
+//         {
+//         description : '',
+//         note : '',
+//         amount : 0,
+//         createdAt : 0,
+//         id:expect.any(String)
+//         }
+//     })
+// })

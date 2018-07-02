@@ -1,23 +1,38 @@
 import uuid from 'uuid';
 
+import database from '../firebase/firebase';
+
 // ADD_EXPENSE
-export const addExpense = (
-  {
-    description = '',
-    note = '',
-    amount = 0,
-    createdAt = 0
-  } = {}
-) => ({
+export const addExpense = (expense) => ({
   type: 'ADD_EXPENSE',
-  expense: {
-    id: uuid(),
-    description,
-    note,
-    amount,
-    createdAt
-  }
+  expense
 });
+
+
+//action generator without redux-thunk would not be able to return a function
+export const startAddExpense=(expenseData={})=>{
+  //the return function gets called internally by redux with dispatch obj
+  //over here, when an event happens, we will update the database with
+  //the expense, and wait for the async to be done b4 dispatching-update the store
+
+  return (dispatch)=>{
+    const {
+      description = '',
+      note = '',
+      amount = 0,
+      createdAt = 0
+    } = expenseData;
+    const expense= { description, note, amount, createdAt};
+
+    //return this, so when dispatch(function), it returns below statement
+    //this allows us to do our testing with .then() chaining
+    return database.ref('expenses').push(expense)
+    .then((ref)=>{
+      dispatch(addExpense({...expense,id:ref.key}));
+    })
+  }
+}
+
 
 // REMOVE_EXPENSE
 export const removeExpense = ({ id } = {}) => ({

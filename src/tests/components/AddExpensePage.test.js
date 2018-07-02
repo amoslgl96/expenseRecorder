@@ -13,7 +13,7 @@ let onSubmit, history , wrapper;
 beforeEach(()=>{
     onSubmit=jest.fn();
     history={push:jest.fn()};
-    wrapper=shallow(<AddExpensePage addExpense={onSubmit} history={history}/>) 
+    wrapper=shallow(<AddExpensePage startAddExpense={onSubmit} history={history}/>) 
 })
 
 //check if addExpensePage renders correctly

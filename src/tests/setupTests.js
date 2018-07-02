@@ -9,20 +9,13 @@
 
 
 
+import DotEnv from 'dotenv';
+
 import Enzyme from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 
 Enzyme.configure({
     adapter:new Adapter()
 })
-//can refer to docs airbnb/enzyme for it
 
-
-
-//we would need to have a jest configuration file
-//jest.config.js 
-// to indicate that this setUpTest file 
-// should be run 
-
-
-//.setUpFiles-> specify files to run before you run your tests 
+DotEnv.config({path:'.env.test'});

@@ -1,3 +1,6 @@
 node_modules/
-src/section13_deploying_app
+src/section14_firebase
+src/section15_firebase_redux
 public/dist/
+.env.development 
+.env.test
