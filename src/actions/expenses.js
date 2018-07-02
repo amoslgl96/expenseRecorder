@@ -46,3 +46,40 @@ export const editExpense = (id, updates) => ({
   id,
   updates
 });
+
+
+// SET_EXPENSES from firebase to store 
+export const setExpenses=(expenses)=>(
+  {
+    type:'SET_EXPENSES',
+    expenses
+  }
+)
+
+
+
+// return function -> action generator
+export const startSetExpenses=()=>{
+
+  return (dispatch)=>{
+  
+  //call data from firebase
+  return database.ref('expenses').once('value')
+  .then((snapshot)=>{
+
+    const expenses=[];
+
+    snapshot.forEach((childSnapShot)=>{
+      expenses.push({
+        id:childSnapShot.key,
+        ...childSnapShot.val()
+      })
+    })
+
+    dispatch(setExpenses(expenses));
+  })
+
+  }
+}
+
+
