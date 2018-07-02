@@ -9,7 +9,7 @@ import test_expenses from '../fixtures/expenses'
 //check if editExpensePage renders correctly, put in one of the expense from expenses
 
 
-let history,editExpense,removeExpense,wrapper,expense;
+let history,editExpense,startRemoveExpense,wrapper,expense;
 
 //need to do this way as for each tests, the history and onsubmit
 //mock functions would be called with different arguments
@@ -18,13 +18,13 @@ beforeEach(()=>{
     history={push:jest.fn()};
     editExpense=jest.fn();
     expense=test_expenses[0];
-    removeExpense=jest.fn();
+    startRemoveExpense=jest.fn();
 
     wrapper=shallow(<EditExpensePage 
     editExpense={editExpense} 
     history={history} 
     expense={expense} 
-    removeExpense={removeExpense}/>)
+    startRemoveExpense={startRemoveExpense}/>)
 })
 
 test('Should render editExpensePage correctly',
@@ -47,8 +47,8 @@ test('should handle editExpense for editing expense',
 
 
 
-//check onRemove function, removeExpense and history.push is called correctly
-test('should handle onRemove where expense is removed',
+//check onRemove function, StartremoveExpense and history.push is called correctly
+test('should handle startRemoveExpense',
 ()=>{
     
 
@@ -58,7 +58,7 @@ test('should handle onRemove where expense is removed',
     expect(history.push).toHaveBeenLastCalledWith('/');
 
     //test if props.removeExpense gets called correctly
-    expect(removeExpense).toHaveBeenLastCalledWith({id:expense.id});
+    expect(startRemoveExpense).toHaveBeenLastCalledWith(expense.id);
 
 
     

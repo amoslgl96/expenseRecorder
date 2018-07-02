@@ -1,6 +1,6 @@
 
 
-import {startAddExpense, addExpense,removeExpense,editExpense, setExpenses, startSetExpenses} from '../../actions/expenses';
+import {startAddExpense, addExpense,removeExpense,editExpense, setExpenses, startSetExpenses, startRemoveExpense} from '../../actions/expenses';
 
 import thunk from 'redux-thunk';
 //to use the mock-store, we also need the thunk 
@@ -42,12 +42,35 @@ beforeEach((done)=>{
 //test for removeExpense
 
 test('Should setup remove expense action object',()=>{
-    const result=removeExpense({id:'123abc'});
+    //const result=removeExpense({id:'123abc'});
+    const result=removeExpense('123abc');
     expect(result).toEqual({
         type:'REMOVE_EXPENSE',
         id:'123abc'
     })
 })
+
+//test for startRemoveExpense
+
+test('Should remove expense from database',(done)=>{
+
+    const store=createMockStore({});
+    store.dispatch(startRemoveExpense(test_expenses[0].id)).then(()=>{
+        const actions=store.getActions();
+        expect(actions[0]).toEqual({
+            type:'REMOVE_EXPENSE',
+            id:test_expenses[0].id
+        })
+
+        return database.ref(`expenses/${test_expenses[0].id}`)
+        .once('value');
+
+    }).then((snapshot)=>{
+        expect(snapshot.val()).toBeFalsy();
+        done();
+    })
+})
+
 
 
 
