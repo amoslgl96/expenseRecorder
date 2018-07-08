@@ -9,13 +9,9 @@ export const addExpense = (expense) => ({
 });
 
 
-//action generator without redux-thunk would not be able to return a function
 export const startAddExpense=(expenseData={})=>{
-  //the return function gets called internally by redux with dispatch obj
-  //over here, when an event happens, we will update the database with
-  //the expense, and wait for the async to be done b4 dispatching-update the store
 
-  return (dispatch)=>{
+  return (dispatch,getState)=>{
     const {
       description = '',
       note = '',
@@ -23,10 +19,11 @@ export const startAddExpense=(expenseData={})=>{
       createdAt = 0
     } = expenseData;
     const expense= { description, note, amount, createdAt};
+    const uid=getState().auth.uid;
 
     //return this, so when dispatch(function), it returns below statement
     //this allows us to do our testing with .then() chaining
-    return database.ref('expenses').push(expense)
+    return database.ref(`users/${uid}/expenses`).push(expense)
     .then((ref)=>{
       dispatch(addExpense({...expense,id:ref.key}));
     })
@@ -48,9 +45,9 @@ export const removeExpense = (id) => ({
 // redux-thunk action generator for removeExpense
 // returns a function for dispatch
 export const startRemoveExpense=(id)=>{
-  return (dispatch)=>{
-    
-    return database.ref(`expenses/${id}`).remove().then(()=>{
+  return (dispatch,getState)=>{
+    const uid=getState().auth.uid;
+    return database.ref(`users/${uid}/expenses/${id}`).remove().then(()=>{
       dispatch(removeExpense(id));
     })
   }
@@ -69,9 +66,9 @@ export const editExpense = (id, updates) => ({
 
 
 export const startEditExpense = (id, updates)=>{
-  return (dispatch)=>{
-
-    return database.ref(`expenses/${id}`).update(updates).then(
+  return (dispatch,getState)=>{
+    const uid=getState().auth.uid;
+    return database.ref(`users/${uid}/expenses/${id}`).update(updates).then(
       ()=>{
         dispatch(editExpense(id,updates));
       }
@@ -93,10 +90,12 @@ export const setExpenses=(expenses)=>(
 // return function -> action generator
 export const startSetExpenses=()=>{
 
-  return (dispatch)=>{
+  return (dispatch,getState)=>{
+
+  const uid=getState().auth.uid;
   
   //call data from firebase
-  return database.ref('expenses').once('value')
+  return database.ref(`users/${uid}/expenses`).once('value')
   .then((snapshot)=>{
 
     const expenses=[];
