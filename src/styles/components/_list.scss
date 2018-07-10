@@ -1,0 +1,74 @@
+.list-header{
+    background: $off-white;
+    border:1px solid darken($off-white, 7%);
+    color: $grey;
+    display: flex;
+    justify-content: space-between;
+    padding: $s-size $m-size;
+}
+
+//to make margin between the list and the bottom of the window page
+.list-body{
+    margin-bottom:$m-size;
+    
+    @media(min-width:$desktop-breakpoint)
+    {
+        margin-bottom:$l-size;
+    }
+}
+
+.list-item{
+    border: 1px solid darken($off-white, 7%);
+    border-top: none;
+    display: flex;
+    color: $dark-grey;
+    flex-direction: column;
+    padding: $s-size;
+    text-decoration: none;
+    transition: background .3s ease;
+    &:hover{
+        background: $off-white;
+    }
+
+    @media (min-width: $desktop-breakpoint)
+    {
+        align-items: center;
+        flex-direction: row;
+        justify-content: space-between;
+        padding: $m-size;
+    }
+}
+//transition for the hover effect 
+//&: is a scss feature. It is just saying .list-item:hover
+
+
+//styling for no expenses message
+.list-item--message{
+    align-items: center;
+    color: $grey;
+    justify-content: center;
+    padding: $m-size;
+    &:hover {
+        background: none;
+    }
+}
+
+.list-item__title{
+    margin:0;
+    word-break: break-all;
+}
+
+.list-item__sub_title{
+    color: $grey;
+    font-size: $font-size-small;
+}
+
+.list-item__data{
+    margin: $s-size 0 0 0;
+    @media (min-width: $desktop-breakpoint)
+    {
+        margin: 0;
+        padding-left: $s-size;
+
+    }
+}

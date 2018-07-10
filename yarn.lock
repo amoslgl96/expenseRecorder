@@ -816,7 +816,7 @@ babel-plugin-transform-strict-mode@^6.24.1:
     babel-runtime "^6.22.0"
     babel-types "^6.24.1"
 
-babel-polyfill@^6.23.0:
+babel-polyfill@6.26.0, babel-polyfill@^6.23.0:
   version "6.26.0"
   resolved "https://registry.yarnpkg.com/babel-polyfill/-/babel-polyfill-6.26.0.tgz#379937abc67d7895970adc621f284cd966cf2153"
   dependencies:
@@ -6483,10 +6483,6 @@ validate-npm-package-license@^3.0.1:
   dependencies:
     spdx-correct "^3.0.0"
     spdx-expression-parse "^3.0.0"
-
-validator@8.0.0:
-  version "8.0.0"
-  resolved "https://registry.yarnpkg.com/validator/-/validator-8.0.0.tgz#00d6ec230ab5d3353ab1174162a96462b947bdbd"
 
 value-equal@^0.4.0:
   version "0.4.0"

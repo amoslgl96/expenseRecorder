@@ -11,6 +11,8 @@ import 'normalize.css/normalize.css';
 import 'react-dates/lib/css/_datepicker.css';
 import './styles/styles.scss';
 
+import LoadingPage from './components/LoadingPage';
+
 import { firebase } from './firebase/firebase';
 
 const store = configureStore();
@@ -34,7 +36,7 @@ const renderApp=()=>{
 
 
 //when app starts, retrieve existing data from database and update the store 
-ReactDOM.render(<p>Loading...</p>, document.getElementById('app'));
+ReactDOM.render(<LoadingPage/>, document.getElementById('app'));
 
 
 
@@ -44,6 +46,8 @@ ReactDOM.render(<p>Loading...</p>, document.getElementById('app'));
 //if logged in successfully, call-back fucntion (user)=>{} will be triggered
 //acts as an event listener
 //this gets called whenever a user presses login/logout/refresehs
+
+
 firebase.auth().onAuthStateChanged((user)=>{
     if(user)
     {
