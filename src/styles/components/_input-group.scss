@@ -1,0 +1,33 @@
+.input-group
+{
+    display:flex;
+    //flex by default, direction is row
+    //now we set to column for small screens
+    flex-direction:column;
+    margin-bottom: $m-size;
+
+    //stack the filters list item when viewing from smaller viewport
+
+    //this is the style to apply when we view from bigger screens
+    //do note that the styles defined above exists for media too
+    //we are overwriting styles here
+    @media (min-width: $desktop-breakpoint)
+    {
+        flex-direction:row;
+        margin-bottom: $l-size;
+    }
+}
+
+
+.input-group__item
+{
+    margin-bottom: $s-size;
+    
+    @media(min-width: $desktop-breakpoint)
+    {
+        //for wider screens, it is stacked horizontally
+        //so we only need margin-right
+        margin: 0 $s-size 0 0;
+            
+    }
+}

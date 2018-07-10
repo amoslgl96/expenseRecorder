@@ -1,0 +1,32 @@
+
+.button {
+    background: $blue;
+    border: none;
+    color: white;
+    display:inline-block;
+    font-size: $font-size-large;
+    font-weight: 300;
+    line-height: 1; //make button box skinnier
+    padding: $s-size;
+    text-decoration:none;
+}
+/*
+display: inline-block allows us to set a width and height on the element.
+
+Also, with display: inline-block, the top and bottom margins/paddings are respected
+
+by default our links are display: inline
+this means we would not be able to have our padding and margin
+*/
+
+
+
+// link modifier, for logout button , 
+// using -- allows us to indiicate modify the button
+// on top of the styles available from .button
+// className would be "button button--link"
+.button--link {
+    background:none;
+}
+
+

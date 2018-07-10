@@ -1,0 +1,44 @@
+
+
+//url takes reference to the directory AT the browser
+//meaning root dir is at public folder 
+
+.box-layout{
+    background: url('/images/bg.jpg');
+    //by default the background image
+    //is not going to fill up max width and height
+    //so we need to manually set that 
+
+    background-size:cover;
+    //cover means the image would stretch along to cover entire container 
+
+    height: 100vh;
+    //vh -> viewport height , 100 = 100 %
+    //The viewport is the user's visible area of a web page. 
+    width: 100vw;
+
+
+    //to center the elements, we use flexbox 
+    display:flex;
+    justify-content: center; //center horizontally
+    align-items:center; //center vertically
+
+}
+
+
+.box-layout__box{
+    background:fade-out(white,0.2);
+    border-radius: 3px;
+    padding: $l-size $m-size;
+    text-align: center;
+    width: 25rem;
+
+}
+
+
+//line-height spacing between lines 
+
+.box-layout__title {
+    margin: 0 0 $m-size 0;
+    line-height: 1;
+}

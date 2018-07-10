@@ -2,6 +2,7 @@ node_modules/
 src/section14_firebase
 src/section15_firebase_redux
 src/section16_firebase_authentication
+src/section17_styling_expensify
 public/dist/
 .env.development 
 .env.test

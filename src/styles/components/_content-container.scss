@@ -1,0 +1,9 @@
+//this is where we define the max-width container 
+//that centers everything nicely
+
+.content-container{
+    //to ensure that it is align with proper space on left & right
+    margin: 0 auto;
+    padding:0 $m-size;
+    max-width: 80rem;
+}
